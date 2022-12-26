@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@uwmh/uiprimitives": ["libs/uiprimitives/src/index.ts"]
+      "@uwmh/uiprimitives": ["libs/uiprimitives/src/index.ts"],
+      "@uwmh/uiwidgets": ["libs/uiwidgets/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
