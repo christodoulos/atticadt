@@ -1,0 +1,17 @@
+<div class="w-64 flex flex-col text-sm">
+  <div class="flex flex-row space-x-2 items-center">
+    <uwmh-range-input
+      class="w-96"
+      [inValue]="time"
+      [min]="0"
+      [max]="86400"
+      (outValue)="onOutValue($event)"
+    ></uwmh-range-input>
+    <uwmh-button-primary
+      (click)="now()"
+      [size]="'xs'"
+      [text]="'Now'"
+    ></uwmh-button-primary>
+  </div>
+  <div class="w-full text-center">{{ date | date : 'short' }}</div>
+</div>

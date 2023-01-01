@@ -7,3 +7,7 @@ export * from './lib/svg-icon-button/svg-icon.component';
 export * from './lib/icon-button/icon-button.component';
 
 export * from './lib/simple-toggle/simple-toggle.component';
+
+export * from './lib/integer-input/integer-input.component';
+
+export * from './lib/range-input/range-input.component';

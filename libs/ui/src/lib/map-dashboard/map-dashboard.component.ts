@@ -12,4 +12,20 @@ export class MapDashboardComponent {
   onSkyLayerToggle(visible: boolean) {
     this.state.setSkyLayer(visible);
   }
+
+  onPitchChange(pitch: number) {
+    this.state.setPitch(pitch);
+  }
+
+  onBearingChange(bearing: number) {
+    this.state.setBearing(bearing);
+  }
+
+  onZoomChange(zoom: number) {
+    this.state.setZoom(zoom);
+  }
+
+  onOutValue(value: number) {
+    console.log(value);
+  }
 }

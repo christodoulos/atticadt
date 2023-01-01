@@ -6,10 +6,21 @@ import { UiprimitivesModule } from '@uwmh/uiprimitives';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { SimpleNavbarComponent } from './simple-navbar/simple-navbar.component';
+import { TimeSliderComponent } from './time-slider/time-slider.component';
 
 @NgModule({
   imports: [CommonModule, UiprimitivesModule],
-  declarations: [NavbarComponent, FooterComponent, SimpleNavbarComponent],
-  exports: [NavbarComponent, FooterComponent, SimpleNavbarComponent],
+  declarations: [
+    NavbarComponent,
+    FooterComponent,
+    SimpleNavbarComponent,
+    TimeSliderComponent,
+  ],
+  exports: [
+    NavbarComponent,
+    FooterComponent,
+    SimpleNavbarComponent,
+    TimeSliderComponent,
+  ],
 })
 export class UiwidgetsModule {}

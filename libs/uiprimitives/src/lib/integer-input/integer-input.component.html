@@ -1,0 +1,22 @@
+<div class="flex items-center">
+  <!-- <label class="block text-sm font-medium text-gray-700">{{ text }}</label>
+  <div class="mt-1">
+    <input
+      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+    />
+  </div> -->
+
+  <input
+    type="number"
+    [(ngModel)]="value"
+    (ngModelChange)="onChange($event)"
+    min="{{ min }}"
+    max="{{ max }}"
+    class="w-20 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+  />
+
+  <span class="ml-3">
+    <span class="text-sm font-medium text-gray-900">{{ text }}</span>
+    <span class="ml-1 text-sm text-gray-500">({{ min }} - {{ max }})</span>
+  </span>
+</div>

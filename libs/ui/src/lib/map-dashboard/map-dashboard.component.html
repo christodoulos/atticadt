@@ -4,4 +4,26 @@
     [text]="'Sky Layer'"
     (toggle)="onSkyLayerToggle($event)"
   ></uwmh-simple-toggle>
+  <uwmh-integer-input
+    [text]="'Pitch'"
+    [max]="85"
+    [min]="1"
+    [value]="85"
+    (valueOut)="onPitchChange($event)"
+  ></uwmh-integer-input>
+  <uwmh-integer-input
+    [text]="'Bearing'"
+    [max]="360"
+    [min]="-360"
+    [value]="45"
+    (valueOut)="onBearingChange($event)"
+  ></uwmh-integer-input>
+  <uwmh-integer-input
+    [text]="'Zoom'"
+    [max]="20"
+    [min]="0"
+    [value]="17"
+    (valueOut)="onZoomChange($event)"
+  ></uwmh-integer-input>
+  <uwmh-time-slider></uwmh-time-slider>
 </div>
