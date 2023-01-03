@@ -25,5 +25,5 @@
     [value]="17"
     (valueOut)="onZoomChange($event)"
   ></uwmh-integer-input>
-  <uwmh-time-slider></uwmh-time-slider>
+  <uwmh-time-slider (newTime)="onDateTimeChange($event)"></uwmh-time-slider>
 </div>

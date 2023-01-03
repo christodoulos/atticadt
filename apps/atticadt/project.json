@@ -20,7 +20,7 @@
           "node_modules/threebox-plugin/dist/threebox.css",
           "apps/atticadt/src/styles.css"
         ],
-        "scripts": ["node_modules/threebox-plugin/dist/threebox.min.js"]
+        "scripts": ["node_modules/threebox-plugin/dist/threebox.js"]
       },
       "configurations": {
         "production": {

@@ -25,6 +25,10 @@ export class MapDashboardComponent {
     this.state.setZoom(zoom);
   }
 
+  onDateTimeChange(dateTime: Date) {
+    this.state.setDateTime(dateTime);
+  }
+
   onOutValue(value: number) {
     console.log(value);
   }

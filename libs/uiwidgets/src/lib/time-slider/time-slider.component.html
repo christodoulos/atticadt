@@ -13,5 +13,8 @@
       [text]="'Now'"
     ></uwmh-button-primary>
   </div>
-  <div class="w-full text-center">{{ date | date : 'short' }}</div>
+  <div class="inline-flex items-center space-x-2">
+    <uwmh-svg-icon [icon]="'clock-small'"></uwmh-svg-icon
+    ><span>{{ date | date : 'short' }}</span>
+  </div>
 </div>

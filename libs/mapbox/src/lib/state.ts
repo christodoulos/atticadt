@@ -12,6 +12,7 @@ export interface DTMap {
   antialias?: boolean;
   skyLayer?: boolean;
   accessToken?: string;
+  dateTime?: Date;
 }
 
 const DTMapInit: DTMap = {
@@ -29,6 +30,7 @@ export class MapState {
   zoom$ = mapState.pipe(select((state) => state.zoom));
   skyLayer$ = mapState.pipe(select((state) => state.skyLayer));
   center$ = mapState.pipe(select((state) => state.center));
+  dateTime$ = mapState.pipe(select((state) => state.dateTime));
 
   setStyle(style: string) {
     mapState.update((state) => ({ ...state, style }));
@@ -62,5 +64,9 @@ export class MapState {
 
   setCenter(center: number[]) {
     mapState.update((state) => ({ ...state, center }));
+  }
+
+  setDateTime(dateTime: Date) {
+    mapState.update((state) => ({ ...state, dateTime }));
   }
 }
