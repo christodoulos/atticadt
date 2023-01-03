@@ -19,7 +19,8 @@
       "@uwmh/ui": ["libs/ui/src/index.ts"],
       "@uwmh/uiprimitives": ["libs/uiprimitives/src/index.ts"],
       "@uwmh/uiwidgets": ["libs/uiwidgets/src/index.ts"]
-    }
+    },
+    "typeRoots": ["./typings.d.ts"]
   },
   "exclude": ["node_modules", "tmp"]
 }

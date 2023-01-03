@@ -1,3 +1,10 @@
+declare global {
+  interface Window {
+    Threebox: any;
+  }
+}
+window.Threebox = window.Threebox || {};
+
 import { ElementRef, Injectable } from '@angular/core';
 import { Map, LngLatBoundsLike, LngLatLike } from 'mapbox-gl';
 import { MapState } from './state';
@@ -7,6 +14,7 @@ import { MapState } from './state';
 })
 export class MapService {
   map: Map | undefined;
+  tb: any;
   style$ = this.state.style$;
   bounds$ = this.state.bounds$;
   bearing$ = this.state.bearing$;
@@ -42,12 +50,61 @@ export class MapService {
 
   newMap(container: ElementRef): Map {
     this.map = new Map({
-      style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
+      // style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
+      style: 'mapbox://styles/mapbox/streets-v11',
       container: container.nativeElement,
       antialias: true,
+      center: [23.781372557061157, 37.988260208268386],
+      bearing: 45,
+      zoom: 17,
       accessToken:
         'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
     });
+    window.Threebox = new window.Threebox(
+      this.map,
+      this.map.getCanvas().getContext('webgl'),
+      {
+        willReadFrequently: true,
+        realSunlight: true,
+        sky: true,
+        // terrain: true,
+        enableSelectingObjects: true,
+        enableSelectingFeatures: true,
+      }
+    );
+    this.tb = window.Threebox;
+
+    this.map.on('style.load', () => {
+      if (this.map?.getLayer('building')) {
+        this.map.removeLayer('building');
+      }
+      if (this.map?.getSource('composite')) {
+        this.map.addLayer(
+          {
+            id: '3d-buildings',
+            source: 'composite',
+            'source-layer': 'building',
+            type: 'fill-extrusion',
+            minzoom: 14,
+            paint: {
+              'fill-extrusion-color': '#ddd',
+              'fill-extrusion-height': ['number', ['get', 'height'], 5],
+              'fill-extrusion-base': ['number', ['get', 'min_height'], 0],
+              'fill-extrusion-opacity': 1,
+            },
+          },
+          'waterway-label'
+        );
+      }
+      console.log(this.map?.getStyle());
+      this.tb.setBuildingShadows({
+        map: this.map,
+        layerId: 'building-shadows',
+        buildingsLayerId: '3d-buildings',
+        minAltitude: 0.1,
+      });
+    });
+
     return this.map;
   }
 

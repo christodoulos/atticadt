@@ -17,10 +17,10 @@
         "assets": ["apps/atticadt/src/favicon.ico", "apps/atticadt/src/assets"],
         "styles": [
           "node_modules/mapbox-gl/dist/mapbox-gl.css",
-          "node_modules/threebox-plugin/dist/threebox.css",
+          "threebox/threebox.css",
           "apps/atticadt/src/styles.css"
         ],
-        "scripts": ["node_modules/threebox-plugin/dist/threebox.js"]
+        "scripts": ["threebox/threebox.min.js"]
       },
       "configurations": {
         "production": {
