@@ -52,7 +52,7 @@ export class MapService {
     });
   }
 
-  newMap(container: ElementRef): Map {
+  newMap(container: ElementRef): { map: Map; tb: any } {
     this.map = new Map({
       style: 'mapbox://styles/mapbox/streets-v11',
       container: container.nativeElement,
@@ -63,52 +63,51 @@ export class MapService {
       accessToken:
         'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
     });
-    window.Threebox = new window.Threebox(
-      this.map,
-      this.map.getCanvas().getContext('webgl'),
-      {
-        willReadFrequently: true,
-        realSunlight: true,
-        sky: true,
-        // terrain: true,
-        // enableSelectingObjects: true,
-        // enableSelectingFeatures: true,
-      }
-    );
-    this.tb = window.Threebox;
 
-    this.map.on('style.load', () => {
-      console.log('STYLE LOAD');
-      if (this.map?.getLayer('building')) {
-        this.map.removeLayer('building');
-      }
-      if (this.map?.getSource('composite')) {
-        this.map.addLayer(
-          {
-            id: '3d-buildings',
-            source: 'composite',
-            'source-layer': 'building',
-            type: 'fill-extrusion',
-            minzoom: 14,
-            paint: {
-              'fill-extrusion-color': '#ddd',
-              'fill-extrusion-height': ['number', ['get', 'height'], 5],
-              'fill-extrusion-base': ['number', ['get', 'min_height'], 0],
-              'fill-extrusion-opacity': 1,
-            },
-          },
-          'waterway-label'
-        );
-      }
-      this.tb.setBuildingShadows({
-        map: this.map,
-        layerId: 'building-shadows',
-        buildingsLayerId: '3d-buildings',
-        minAltitude: 0.1,
-      });
+    this.tb = this.newThreeBox(this.map);
+
+    return { map: this.map, tb: this.tb };
+  }
+
+  newThreeBox(map: Map) {
+    return new window.Threebox(map, map.getCanvas().getContext('webgl'), {
+      willReadFrequently: true,
+      realSunlight: true,
+      sky: true,
+      // terrain: true,
+      // enableSelectingObjects: true,
+      // enableSelectingFeatures: true,
     });
+  }
 
-    return this.map;
+  add3DBuildingsLayer(map: Map, tb: any) {
+    if (map.getLayer('building')) {
+      map.removeLayer('building');
+    }
+    if (map.getSource('composite')) {
+      map.addLayer(
+        {
+          id: '3d-buildings',
+          source: 'composite',
+          'source-layer': 'building',
+          type: 'fill-extrusion',
+          minzoom: 14,
+          paint: {
+            'fill-extrusion-color': '#ddd',
+            'fill-extrusion-height': ['number', ['get', 'height'], 5],
+            'fill-extrusion-base': ['number', ['get', 'min_height'], 0],
+            'fill-extrusion-opacity': 1,
+          },
+        },
+        'waterway-label'
+      );
+    }
+    tb.setBuildingShadows({
+      map: this.map,
+      layerId: 'building-shadows',
+      buildingsLayerId: '3d-buildings',
+      minAltitude: 0.1,
+    });
   }
 
   addSkyLayer() {
@@ -143,7 +142,7 @@ export class MapService {
   }
 
   onLoad(map: Map) {
-    console.log('LOAD');
+    console.log('MAP LOAD');
     this.map = map;
     // this.mapState.setBounds([
     //   [24.116494, 38.340999],
@@ -153,5 +152,10 @@ export class MapService {
     this.state.setZoom(17);
     this.state.setBearing(45);
     this.state.setPitch(85);
+  }
+
+  onStyleLoad(map: Map, tb: any) {
+    console.log('MAP STYLE LOAD');
+    this.add3DBuildingsLayer(map, tb);
   }
 }

@@ -5,7 +5,6 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { Map } from 'mapbox-gl';
 import { MapService } from '../map.service';
 import { MapState } from '../state';
 
@@ -20,7 +19,8 @@ export class MapComponent implements AfterViewInit {
   constructor(private service: MapService, private state: MapState) {}
 
   ngAfterViewInit(): void {
-    const map = this.service.newMap(this.mapDiv);
+    const { map, tb } = this.service.newMap(this.mapDiv);
+    map.on('style.load', () => this.service.onStyleLoad(map, tb));
     map.on('load', () => this.service.onLoad(map));
   }
 }
