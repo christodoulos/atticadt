@@ -7,22 +7,22 @@
   <uwmh-integer-input
     [text]="'Pitch'"
     [max]="85"
-    [min]="1"
-    [value]="85"
+    [min]="0"
+    [value]="(pitch$ | async) ?? 0"
     (valueOut)="onPitchChange($event)"
   ></uwmh-integer-input>
   <uwmh-integer-input
     [text]="'Bearing'"
-    [max]="360"
-    [min]="-360"
-    [value]="45"
+    [max]="180"
+    [min]="-179"
+    [value]="(bearing$ | async) ?? 0"
     (valueOut)="onBearingChange($event)"
   ></uwmh-integer-input>
   <uwmh-integer-input
     [text]="'Zoom'"
-    [max]="20"
+    [max]="22"
     [min]="0"
-    [value]="17"
+    [value]="(zoom$ | async) ?? 0"
     (valueOut)="onZoomChange($event)"
   ></uwmh-integer-input>
   <uwmh-time-slider (newTime)="onDateTimeChange($event)"></uwmh-time-slider>

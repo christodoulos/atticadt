@@ -7,6 +7,10 @@ import { MapState } from '@uwmh/mapbox';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapDashboardComponent {
+  pitch$ = this.state.pitch$;
+  bearing$ = this.state.bearing$;
+  zoom$ = this.state.zoom$;
+
   constructor(private state: MapState) {}
 
   onSkyLayerToggle(visible: boolean) {

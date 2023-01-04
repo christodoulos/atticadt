@@ -158,4 +158,22 @@ export class MapService {
     console.log('MAP STYLE LOAD');
     this.add3DBuildingsLayer(map, tb);
   }
+
+  onZoomEnd(map: Map) {
+    let zoom = map.getZoom();
+    zoom = Math.round((zoom + Number.EPSILON) * 100) / 100;
+    this.state.setZoom(zoom);
+  }
+
+  onRotateEnd(map: Map) {
+    let bearing = map.getBearing();
+    bearing = Math.round((bearing + Number.EPSILON) * 100) / 100;
+    this.state.setBearing(bearing);
+  }
+
+  onPitchEnd(map: Map) {
+    let pitch = map.getPitch();
+    pitch = Math.round((pitch + Number.EPSILON) * 100) / 100;
+    this.state.setPitch(pitch);
+  }
 }
