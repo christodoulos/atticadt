@@ -22,6 +22,7 @@ export class MapService {
   zoom$ = this.state.zoom$;
   skyLayer$ = this.state.skyLayer$;
   center$ = this.state.center$;
+  dateTime$ = this.state.dateTime$;
 
   constructor(private state: MapState) {
     // subscribe to map selectors and update map
@@ -46,11 +47,13 @@ export class MapService {
     this.center$.subscribe((center) => {
       this.map && center ? this.map.setCenter(center as LngLatLike) : {};
     });
+    this.dateTime$.subscribe((dateTime) => {
+      this.tb ? this.tb.setSunlight(dateTime) : {};
+    });
   }
 
   newMap(container: ElementRef): Map {
     this.map = new Map({
-      // style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
       style: 'mapbox://styles/mapbox/streets-v11',
       container: container.nativeElement,
       antialias: true,
@@ -68,13 +71,14 @@ export class MapService {
         realSunlight: true,
         sky: true,
         // terrain: true,
-        enableSelectingObjects: true,
-        enableSelectingFeatures: true,
+        // enableSelectingObjects: true,
+        // enableSelectingFeatures: true,
       }
     );
     this.tb = window.Threebox;
 
     this.map.on('style.load', () => {
+      console.log('STYLE LOAD');
       if (this.map?.getLayer('building')) {
         this.map.removeLayer('building');
       }
@@ -96,7 +100,6 @@ export class MapService {
           'waterway-label'
         );
       }
-      console.log(this.map?.getStyle());
       this.tb.setBuildingShadows({
         map: this.map,
         layerId: 'building-shadows',
@@ -137,5 +140,18 @@ export class MapService {
 
   removeSkyLayer() {
     this.map?.removeLayer('sky-layer');
+  }
+
+  onLoad(map: Map) {
+    console.log('LOAD');
+    this.map = map;
+    // this.mapState.setBounds([
+    //   [24.116494, 38.340999],
+    //   [22.890434, 35.823757],
+    // ]);
+    this.state.setCenter([23.781372557061157, 37.988260208268386]);
+    this.state.setZoom(17);
+    this.state.setBearing(45);
+    this.state.setPitch(85);
   }
 }

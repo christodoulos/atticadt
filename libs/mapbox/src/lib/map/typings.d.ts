@@ -1,1 +1,1 @@
-declare module 'threebox-plugin';
+declare module '@uwmh/threebox';

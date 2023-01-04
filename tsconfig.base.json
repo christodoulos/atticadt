@@ -18,7 +18,8 @@
       "@uwmh/mapbox": ["libs/mapbox/src/index.ts"],
       "@uwmh/ui": ["libs/ui/src/index.ts"],
       "@uwmh/uiprimitives": ["libs/uiprimitives/src/index.ts"],
-      "@uwmh/uiwidgets": ["libs/uiwidgets/src/index.ts"]
+      "@uwmh/uiwidgets": ["libs/uiwidgets/src/index.ts"],
+      "@uwmh/threebox": ["threebox/threebox.js"]
     },
     "typeRoots": ["./typings.d.ts"]
   },
