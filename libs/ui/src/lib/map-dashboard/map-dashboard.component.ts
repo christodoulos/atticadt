@@ -10,6 +10,8 @@ export class MapDashboardComponent {
   pitch$ = this.state.pitch$;
   bearing$ = this.state.bearing$;
   zoom$ = this.state.zoom$;
+  lat$ = this.state.lat$;
+  lng$ = this.state.lng$;
 
   constructor(private state: MapState) {}
 
@@ -31,6 +33,14 @@ export class MapDashboardComponent {
 
   onDateTimeChange(dateTime: Date) {
     this.state.setDateTime(dateTime);
+  }
+
+  onLatChange(lat: number) {
+    this.state.setLat(lat);
+  }
+
+  onLngChange(lng: number) {
+    this.state.setLng(lng);
   }
 
   onOutValue(value: number) {

@@ -4,6 +4,16 @@
     [text]="'Sky Layer'"
     (toggle)="onSkyLayerToggle($event)"
   ></uwmh-simple-toggle>
+  <uwmh-float-input
+    [text]="'Longitude'"
+    [value]="(lng$ | async) ?? 0"
+    (valueOut)="onLngChange($event)"
+  ></uwmh-float-input>
+  <uwmh-float-input
+    [text]="'Latitude'"
+    [value]="(lat$ | async) ?? 0"
+    (valueOut)="onLatChange($event)"
+  ></uwmh-float-input>
   <uwmh-integer-input
     [text]="'Pitch'"
     [max]="85"

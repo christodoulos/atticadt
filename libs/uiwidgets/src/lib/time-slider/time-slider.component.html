@@ -1,20 +1,51 @@
-<div class="w-64 flex flex-col text-sm">
-  <div class="flex flex-row space-x-2 items-center">
+<div class="border rounded-md p-2 w-96 flex flex-col text-sm space-y-1">
+  <div class="flex flex-row space-x-1">
+    <uwmh-svg-icon
+      (click)="dec()"
+      class="cursor-pointer"
+      [icon]="'arrow-small-left'"
+    ></uwmh-svg-icon>
     <uwmh-range-input
-      class="w-96"
+      class="w-full"
       [inValue]="time"
       [min]="0"
       [max]="86400"
       (outValue)="onOutValue($event)"
     ></uwmh-range-input>
-    <uwmh-button-primary
-      (click)="now()"
-      [size]="'xs'"
-      [text]="'Now'"
-    ></uwmh-button-primary>
+    <uwmh-svg-icon
+      (click)="inc()"
+      class="cursor-pointer"
+      [icon]="'arrow-small-right'"
+    ></uwmh-svg-icon>
   </div>
-  <div class="inline-flex items-center space-x-2">
-    <uwmh-svg-icon [icon]="'clock-small'"></uwmh-svg-icon
-    ><span>{{ date | date : 'short' }}</span>
+
+  <div class="flex flex-row justify-center items-center space-x-2">
+    <span>{{ date | date : 'short' }}</span>
+
+    <div class="flex space-x-2">
+      <uwmh-button-primary
+        (click)="now()"
+        [size]="'xs'"
+        [text]="'Now'"
+      ></uwmh-button-primary>
+
+      <uwmh-button-primary
+        (click)="dawn()"
+        [size]="'xs'"
+        [text]="'Dawn'"
+      ></uwmh-button-primary>
+
+      <uwmh-button-primary
+        (click)="noon()"
+        [size]="'xs'"
+        [text]="'Noon'"
+      ></uwmh-button-primary>
+
+      <uwmh-button-primary
+        (click)="dusk()"
+        [size]="'xs'"
+        [text]="'Dusk'"
+      ></uwmh-button-primary>
+    </div>
   </div>
 </div>

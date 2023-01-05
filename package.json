@@ -23,6 +23,7 @@
     "@nrwl/angular": "15.4.1",
     "mapbox-gl": "^2.2.0",
     "rxjs": "~7.5.0",
+    "suncalc": "^1.9.0",
     "threebox-plugin": "^2.2.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -45,6 +46,7 @@
     "@types/jest": "28.1.1",
     "@types/mapbox-gl": "^2.7.10",
     "@types/node": "16.11.7",
+    "@types/suncalc": "^1.9.0",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "autoprefixer": "^10.4.13",

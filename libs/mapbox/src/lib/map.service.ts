@@ -176,4 +176,11 @@ export class MapService {
     pitch = Math.round((pitch + Number.EPSILON) * 100) / 100;
     this.state.setPitch(pitch);
   }
+
+  onDragEnd(map: Map) {
+    const center = map.getCenter();
+    const lng = center.lng;
+    const lat = center.lat;
+    this.state.setCenter([lng, lat]);
+  }
 }

@@ -16,10 +16,10 @@
     "baseUrl": ".",
     "paths": {
       "@uwmh/mapbox": ["libs/mapbox/src/index.ts"],
+      "@uwmh/threebox": ["threebox/threebox.js"],
       "@uwmh/ui": ["libs/ui/src/index.ts"],
       "@uwmh/uiprimitives": ["libs/uiprimitives/src/index.ts"],
-      "@uwmh/uiwidgets": ["libs/uiwidgets/src/index.ts"],
-      "@uwmh/threebox": ["threebox/threebox.js"]
+      "@uwmh/uiwidgets": ["libs/uiwidgets/src/index.ts"]
     },
     "typeRoots": ["./typings.d.ts"]
   },

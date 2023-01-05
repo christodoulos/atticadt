@@ -24,5 +24,6 @@ export class MapComponent implements AfterViewInit {
     map.on('zoomend', () => this.service.onZoomEnd(map));
     map.on('rotateend', () => this.service.onRotateEnd(map));
     map.on('pitchend', () => this.service.onPitchEnd(map));
+    map.on('dragend', () => this.service.onDragEnd(map));
   }
 }
