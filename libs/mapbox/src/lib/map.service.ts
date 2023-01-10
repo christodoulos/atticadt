@@ -57,8 +57,6 @@ export class MapService {
   newMap(container: ElementRef): { map: Map; tb: any } {
     this.map = new Map({
       style: 'mapbox://styles/mapbox/streets-v11',
-      // style: 'mapbox://styles/mapbox/satellite-streets-v9',
-      // style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
       container: container.nativeElement,
       antialias: true,
       // center: [23.781372557061157, 37.988260208268386],
@@ -220,5 +218,31 @@ export class MapService {
     const lng = center.lng;
     const lat = center.lat;
     this.state.setCenter([lng, lat]);
+  }
+
+  // Map constants
+
+  mapStyles(): string[] {
+    return [
+      'mapbox://styles/mapbox/streets-v11',
+      'mapbox://styles/mapbox/streets-v9',
+      'mapbox://styles/mapbox/satellite-streets-v9',
+      'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
+    ];
+  }
+
+  atticaLandmarks(): string[] {
+    return ['Athens Plant Nursery', 'Hellinikon Development'];
+  }
+
+  atticaLandmarkPosition(landmark: string): number[] {
+    switch (landmark) {
+      case 'Athens Plant Nursery':
+        return [23.781372557061157, 37.988260208268386];
+      case 'Hellinikon Development':
+        return [23.73664159, 37.87891007];
+      default:
+        return [0, 0];
+    }
   }
 }

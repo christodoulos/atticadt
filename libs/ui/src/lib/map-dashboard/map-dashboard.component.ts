@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MapState } from '@uwmh/mapbox';
+import { MapState, MapService } from '@uwmh/mapbox';
 
 @Component({
   selector: 'uwmh-map-dashboard',
@@ -7,13 +7,17 @@ import { MapState } from '@uwmh/mapbox';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapDashboardComponent {
+  style$ = this.state.style$;
   pitch$ = this.state.pitch$;
   bearing$ = this.state.bearing$;
   zoom$ = this.state.zoom$;
   lat$ = this.state.lat$;
   lng$ = this.state.lng$;
 
-  constructor(private state: MapState) {}
+  mapStyles = this.service.mapStyles();
+  landmarks = this.service.atticaLandmarks();
+
+  constructor(private state: MapState, private service: MapService) {}
 
   onSkyLayerToggle(visible: boolean) {
     this.state.setSkyLayer(visible);
@@ -45,5 +49,14 @@ export class MapDashboardComponent {
 
   onOutValue(value: number) {
     console.log(value);
+  }
+
+  onStyleChange(style: string) {
+    this.state.setStyle(style);
+  }
+
+  onLandmarkChange(landmark: string) {
+    const position = this.service.atticaLandmarkPosition(landmark);
+    this.state.setCenter(position);
   }
 }

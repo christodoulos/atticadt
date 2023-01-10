@@ -13,3 +13,5 @@ export * from './lib/integer-input/integer-input.component';
 export * from './lib/range-input/range-input.component';
 
 export * from './lib/float-input/float-input.component';
+
+export * from './lib/simple-select/simple-select.component';
