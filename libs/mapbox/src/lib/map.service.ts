@@ -1,9 +1,11 @@
 declare global {
   interface Window {
-    Threebox: any;
+    tb: any;
   }
 }
-window.Threebox = window.Threebox || {};
+window.tb = window.tb || {};
+
+declare let Threebox: any;
 
 import { ElementRef, Injectable } from '@angular/core';
 import { Map, LngLatBoundsLike, LngLatLike } from 'mapbox-gl';
@@ -55,28 +57,32 @@ export class MapService {
   newMap(container: ElementRef): { map: Map; tb: any } {
     this.map = new Map({
       style: 'mapbox://styles/mapbox/streets-v11',
+      // style: 'mapbox://styles/mapbox/satellite-streets-v9',
+      // style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
       container: container.nativeElement,
       antialias: true,
-      center: [23.781372557061157, 37.988260208268386],
+      // center: [23.781372557061157, 37.988260208268386],
+      center: [23.736663, 37.878939],
       bearing: 45,
       zoom: 17,
       accessToken:
         'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
     });
 
-    this.tb = this.newThreeBox(this.map);
+    window.tb = this.newThreeBox(this.map);
+    this.tb = window.tb;
 
     return { map: this.map, tb: this.tb };
   }
 
   newThreeBox(map: Map) {
-    return new window.Threebox(map, map.getCanvas().getContext('webgl'), {
+    return new Threebox(map, map.getCanvas().getContext('webgl'), {
       willReadFrequently: true,
       realSunlight: true,
       sky: true,
       // terrain: true,
-      // enableSelectingObjects: true,
-      // enableSelectingFeatures: true,
+      enableSelectingObjects: true,
+      enableSelectingFeatures: true,
     });
   }
 
@@ -141,6 +147,37 @@ export class MapService {
     this.map?.removeLayer('sky-layer');
   }
 
+  addGLBLayer(map: Map, tb: any) {
+    // 23.781372557061157, 37.988260208268386
+    const te = map.queryTerrainElevation([23.73664159, 37.87891007]);
+    console.log(te);
+    map.addLayer({
+      id: 'custom_layer',
+      type: 'custom',
+      renderingMode: '3d',
+      onAdd: function (map, mbxContext) {
+        const options = {
+          obj: '/assets/test0.glb',
+          type: 'gltf',
+          scale: 1,
+          units: 'meters',
+          rotation: { x: 90, y: 180, z: 0 },
+          anchor: 'center',
+        };
+        tb.loadObj(options, (model: any) => {
+          model.setCoords([23.73664159, 37.87891007, te]);
+          tb.add(model);
+          // model.castShadow = true;
+          tb.lights.dirLight.target = model;
+        });
+      },
+
+      render: function (gl, matrix) {
+        tb.update();
+      },
+    });
+  }
+
   onLoad(map: Map) {
     console.log('MAP LOAD');
     this.map = map;
@@ -157,6 +194,7 @@ export class MapService {
   onStyleLoad(map: Map, tb: any) {
     console.log('MAP STYLE LOAD');
     this.add3DBuildingsLayer(map, tb);
+    this.addGLBLayer(map, tb);
   }
 
   onZoomEnd(map: Map) {
