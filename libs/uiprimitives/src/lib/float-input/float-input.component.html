@@ -1,12 +1,12 @@
-<div class="flex items-center space-x-2">
+<div>
+  <label class="block text-sm font-medium text-gray-700">
+    {{ text }}
+  </label>
   <input
     type="number"
     step="{{ delta }}"
     [(ngModel)]="value"
     (ngModelChange)="onChange($event)"
-    class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
+    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm"
   />
-  <span class="ml-3">
-    <span class="text-sm font-medium text-gray-900">{{ text }}</span>
-  </span>
 </div>
