@@ -1,0 +1,36 @@
+<label class="block text-sm font-medium text-gray-700">Bearing</label>
+<div class="block w-full border rounded-md p-2">
+  <div class="flex flex-row space-x-2 items-center">
+    <input
+      type="number"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange($event)"
+      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base sm:text-sm"
+    />
+
+    <div class="flex flex-row space-x-2 items-center">
+      <uwmh-button-primary
+        (click)="west()"
+        [text]="'W'"
+        [size]="'xs'"
+      ></uwmh-button-primary>
+      <div class="flex flex-col space-y-2">
+        <uwmh-button-primary
+          (click)="north()"
+          [text]="'N'"
+          [size]="'xs'"
+        ></uwmh-button-primary>
+        <uwmh-button-primary
+          (click)="south()"
+          [text]="'S'"
+          [size]="'xs'"
+        ></uwmh-button-primary>
+      </div>
+      <uwmh-button-primary
+        (click)="east()"
+        [text]="'E'"
+        [size]="'xs'"
+      ></uwmh-button-primary>
+    </div>
+  </div>
+</div>

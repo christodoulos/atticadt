@@ -7,3 +7,5 @@ export * from './lib/footer/footer.component';
 export * from './lib/simple-navbar/simple-navbar.component';
 
 export * from './lib/time-slider/time-slider.component';
+
+export * from './lib/map-bearing/map-bearing.component';

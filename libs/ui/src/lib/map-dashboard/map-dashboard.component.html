@@ -31,13 +31,11 @@
     [value]="(pitch$ | async) ?? 0"
     (valueOut)="onPitchChange($event)"
   ></uwmh-integer-input>
-  <uwmh-integer-input
-    [text]="'Bearing'"
-    [max]="180"
-    [min]="-179"
+  <!-- bearing widget -->
+  <uwmh-map-bearing
     [value]="(bearing$ | async) ?? 0"
-    (valueOut)="onBearingChange($event)"
-  ></uwmh-integer-input>
+    (bearing)="onBearingChange($event)"
+  ></uwmh-map-bearing>
   <uwmh-integer-input
     [text]="'Zoom'"
     [max]="22"

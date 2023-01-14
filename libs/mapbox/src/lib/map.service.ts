@@ -59,9 +59,11 @@ export class MapService {
       style: 'mapbox://styles/mapbox/streets-v11',
       container: container.nativeElement,
       antialias: true,
+      attributionControl: false,
       // center: [23.781372557061157, 37.988260208268386],
       center: [23.736663, 37.878939],
       bearing: 45,
+      bearingSnap: 1,
       zoom: 17,
       accessToken:
         'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
