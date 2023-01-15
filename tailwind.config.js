@@ -18,8 +18,9 @@ module.exports = {
       width: {
         120: '30rem',
         128: '32rem',
-        160: '40rem',
+        160: '40rem', // 640px
         192: '48rem',
+        200: '50rem', // 800px
         256: '64rem',
       },
       height: {
@@ -27,6 +28,7 @@ module.exports = {
         128: '32rem',
         160: '40rem',
         192: '48rem',
+        200: '50rem',
         256: '64rem',
       },
     },
