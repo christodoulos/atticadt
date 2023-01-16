@@ -9,7 +9,7 @@ declare let Threebox: any;
 
 import { ElementRef, Injectable } from '@angular/core';
 import { Map, LngLatBoundsLike, LngLatLike } from 'mapbox-gl';
-import { MapState } from './state';
+import { MapState } from './map.state';
 
 @Injectable({
   providedIn: 'root',

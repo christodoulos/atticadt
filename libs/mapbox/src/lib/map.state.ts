@@ -13,6 +13,8 @@ export interface DTMap {
   lng?: number;
   antialias?: boolean;
   skyLayer?: boolean;
+  terrain?: boolean;
+  shadows?: boolean;
   accessToken?: string;
   dateTime?: Date;
 }
@@ -31,6 +33,8 @@ export class MapState {
   pitch$ = mapState.pipe(select((state) => state.pitch));
   zoom$ = mapState.pipe(select((state) => state.zoom));
   skyLayer$ = mapState.pipe(select((state) => state.skyLayer));
+  terrain$ = mapState.pipe(select((state) => state.terrain));
+  shadows$ = mapState.pipe(select((state) => state.shadows));
   center$ = mapState.pipe(select((state) => state.center));
   lat$ = mapState.pipe(select((state) => state.lat));
   lng$ = mapState.pipe(select((state) => state.lng));
@@ -58,6 +62,14 @@ export class MapState {
 
   setSkyLayer(visible: boolean) {
     mapState.update((state) => ({ ...state, skyLayer: visible }));
+  }
+
+  setTerrain(visible: boolean) {
+    mapState.update((state) => ({ ...state, terrain: visible }));
+  }
+
+  setShadows(visible: boolean) {
+    mapState.update((state) => ({ ...state, shadows: visible }));
   }
 
   toggleSkyLayer() {
