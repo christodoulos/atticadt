@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { SimpleNavbarComponent } from './simple-navbar/simple-navbar.component';
 import { TimeSliderComponent } from './time-slider/time-slider.component';
 import { MapBearingComponent } from './map-bearing/map-bearing.component';
+import { MapCenterComponent } from './map-center/map-center.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, UiprimitivesModule, MapboxModule],
@@ -19,6 +20,7 @@ import { MapBearingComponent } from './map-bearing/map-bearing.component';
     SimpleNavbarComponent,
     TimeSliderComponent,
     MapBearingComponent,
+    MapCenterComponent,
   ],
   exports: [
     NavbarComponent,
@@ -26,6 +28,7 @@ import { MapBearingComponent } from './map-bearing/map-bearing.component';
     SimpleNavbarComponent,
     TimeSliderComponent,
     MapBearingComponent,
+    MapCenterComponent,
   ],
 })
 export class UiwidgetsModule {}

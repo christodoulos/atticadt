@@ -13,11 +13,17 @@ export class MapDashboardComponent {
   zoom$ = this.state.zoom$;
   lat$ = this.state.lat$;
   lng$ = this.state.lng$;
+  center$ = this.state.center$;
 
   mapStyles = this.service.mapStyles();
   landmarks = this.service.atticaLandmarks();
 
   constructor(private state: MapState, private service: MapService) {}
+
+  onMapCenterChange(center: number[]) {
+    console.log('NEW center', center);
+    this.state.setCenter(center);
+  }
 
   onSkyLayerToggle(visible: boolean) {
     this.state.setSkyLayer(visible);

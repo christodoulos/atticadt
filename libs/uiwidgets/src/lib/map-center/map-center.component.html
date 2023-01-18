@@ -1,0 +1,22 @@
+<label class="block text-sm font-medium text-gray-700"
+  >Map Center (lng, lat)</label
+>
+<div class="block w-full border rounded-md p-2">
+  <div class="flex flex-row space-x-2 items-center">
+    <input
+      type="number"
+      step="{{ delta }}"
+      [(ngModel)]="lng"
+      (ngModelChange)="onLngChange($event)"
+      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-xs"
+    />
+
+    <input
+      type="number"
+      step="{{ delta }}"
+      [(ngModel)]="lat"
+      (ngModelChange)="onLatChange($event)"
+      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-xs"
+    />
+  </div>
+</div>

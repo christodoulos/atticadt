@@ -11,11 +11,13 @@ import { ElementRef, Injectable } from '@angular/core';
 import { Map, LngLatBoundsLike, LngLatLike } from 'mapbox-gl';
 import { MapState } from './map.state';
 
+import { centroid } from '@turf/turf';
+
 @Injectable({
   providedIn: 'root',
 })
 export class MapService {
-  map: Map | undefined;
+  map!: Map;
   tb: any;
   style$ = this.state.style$;
   bounds$ = this.state.bounds$;
@@ -55,16 +57,13 @@ export class MapService {
   }
 
   newMap(container: ElementRef): { map: Map; tb: any } {
+    console.log('newMap');
     this.map = new Map({
       style: 'mapbox://styles/mapbox/streets-v11',
       container: container.nativeElement,
       antialias: true,
       attributionControl: false,
-      // center: [23.781372557061157, 37.988260208268386],
-      center: [23.736663, 37.878939],
-      bearing: 45,
-      bearingSnap: 1,
-      zoom: 17,
+      bearingSnap: 0,
       accessToken:
         'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
     });
@@ -76,6 +75,7 @@ export class MapService {
   }
 
   newThreeBox(map: Map) {
+    console.log('newTreebox');
     return new Threebox(map, map.getCanvas().getContext('webgl'), {
       willReadFrequently: true,
       realSunlight: true,
@@ -87,6 +87,7 @@ export class MapService {
   }
 
   add3DBuildingsLayer(map: Map, tb: any) {
+    console.log('add3DBuildingsLayer');
     if (map.getLayer('building')) {
       map.removeLayer('building');
     }
@@ -148,9 +149,10 @@ export class MapService {
   }
 
   addGLBLayer(map: Map, tb: any) {
+    console.log('addGLBLayer');
     // 23.781372557061157, 37.988260208268386
     const te = map.queryTerrainElevation([23.73664159, 37.87891007]);
-    console.log(te);
+    console.log('TERRAIN ELEVATION ', te);
     map.addLayer({
       id: 'custom_layer',
       type: 'custom',
@@ -161,7 +163,7 @@ export class MapService {
           type: 'gltf',
           scale: 1,
           units: 'meters',
-          rotation: { x: 90, y: 180, z: 0 },
+          rotation: { x: 90.0, y: 180.0, z: 0.0 },
           anchor: 'center',
         };
         tb.loadObj(options, (model: any) => {
@@ -181,14 +183,10 @@ export class MapService {
   onLoad(map: Map) {
     console.log('MAP LOAD');
     this.map = map;
-    // this.mapState.setBounds([
-    //   [24.116494, 38.340999],
-    //   [22.890434, 35.823757],
-    // ]);
-    this.state.setCenter([23.781372557061157, 37.988260208268386]);
-    this.state.setZoom(17);
-    this.state.setBearing(45);
-    this.state.setPitch(85);
+    this.state.setBounds([
+      [24.116494, 38.340999],
+      [22.890434, 35.823757],
+    ]);
   }
 
   onStyleLoad(map: Map, tb: any) {
@@ -197,29 +195,71 @@ export class MapService {
     this.addGLBLayer(map, tb);
   }
 
+  getMapBounds(): number[][] {
+    const bounds = this.map.getBounds();
+    const ne = bounds.getNorthEast();
+    const sw = bounds.getSouthWest();
+    return [
+      [ne.lng, ne.lat],
+      [sw.lng, ne.lat],
+    ];
+  }
+
+  getMapCenter(): number[] {
+    const center = this.map.getCenter();
+    const lng = center.lng;
+    const lat = center.lat;
+    return [lng, lat];
+  }
+
+  getMapZoom(): number {
+    const zoom = this.map.getZoom();
+    return Math.round((zoom + Number.EPSILON) * 100) / 100;
+  }
+
+  getMapBearing(): number {
+    const bearing = this.map.getBearing();
+    return Math.round((bearing + Number.EPSILON) * 100) / 100;
+  }
+
+  getMapPitch(): number {
+    const pitch = this.map.getPitch();
+    return Math.round((pitch + Number.EPSILON) * 100) / 100;
+  }
+
   onZoomEnd(map: Map) {
     let zoom = map.getZoom();
     zoom = Math.round((zoom + Number.EPSILON) * 100) / 100;
     this.state.setZoom(zoom);
   }
 
-  onRotateEnd(map: Map) {
-    let bearing = map.getBearing();
-    bearing = Math.round((bearing + Number.EPSILON) * 100) / 100;
-    this.state.setBearing(bearing);
+  onBoxZoomEnd() {
+    console.log('Box Zoom End, waiting 1 sec to update dashboard ...');
+    setTimeout(() => {
+      const bounds = this.getMapBounds();
+      const zoom = this.getMapZoom();
+      const center = this.getMapCenter();
+      this.state.update({ bounds, zoom, center });
+    }, 1000);
   }
 
-  onPitchEnd(map: Map) {
-    let pitch = map.getPitch();
-    pitch = Math.round((pitch + Number.EPSILON) * 100) / 100;
-    this.state.setPitch(pitch);
+  onWheel() {
+    const bounds = this.getMapBounds();
+    const center = this.getMapCenter();
+    const zoom = this.getMapZoom();
+    this.state.update({ bounds, center, zoom });
   }
 
-  onDragEnd(map: Map) {
-    const center = map.getCenter();
-    const lng = center.lng;
-    const lat = center.lat;
-    this.state.setCenter([lng, lat]);
+  onRotateEnd() {
+    this.state.setBearing(this.getMapBearing());
+  }
+
+  onPitchEnd() {
+    this.state.setPitch(this.getMapPitch());
+  }
+
+  onDragEnd() {
+    this.state.setCenter(this.getMapCenter());
   }
 
   // Map constants

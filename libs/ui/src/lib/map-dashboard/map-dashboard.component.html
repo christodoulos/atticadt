@@ -2,7 +2,7 @@
   <h1 class="bg-indigo-600 text-gray-100 p-1 text-center font-semibold">
     Map Dashboard
   </h1>
-  <uwmh-icon-toggle [toggle]="true"></uwmh-icon-toggle>
+
   <uwmh-simple-select
     [label]="'Map Style'"
     [options]="mapStyles"
@@ -14,34 +14,33 @@
     [options]="landmarks"
     (selection)="onLandmarkChange($event)"
   ></uwmh-simple-select>
-  <uwmh-float-input
-    [text]="'Longitude'"
-    [value]="(lng$ | async) ?? 0"
-    (valueOut)="onLngChange($event)"
-  ></uwmh-float-input>
-  <uwmh-float-input
-    [text]="'Latitude'"
-    [value]="(lat$ | async) ?? 0"
-    (valueOut)="onLatChange($event)"
-  ></uwmh-float-input>
-  <uwmh-integer-input
-    [text]="'Pitch'"
-    [max]="85"
-    [min]="0"
-    [value]="(pitch$ | async) ?? 0"
-    (valueOut)="onPitchChange($event)"
-  ></uwmh-integer-input>
+  <uwmh-map-center
+    [lng]="(lng$ | async) ?? 0"
+    [lat]="(lat$ | async) ?? 0"
+    (center)="onMapCenterChange($event)"
+  ></uwmh-map-center>
+  <div class="flex flex-row justify-between">
+    <uwmh-integer-input
+      [text]="'Pitch'"
+      [max]="85"
+      [min]="0"
+      [value]="(pitch$ | async) ?? 0"
+      (valueOut)="onPitchChange($event)"
+    ></uwmh-integer-input>
+    <uwmh-integer-input
+      [text]="'Zoom'"
+      [max]="22"
+      [min]="0"
+      [value]="(zoom$ | async) ?? 0"
+      (valueOut)="onZoomChange($event)"
+    ></uwmh-integer-input>
+  </div>
+
   <!-- bearing widget -->
   <uwmh-map-bearing
     [value]="(bearing$ | async) ?? 0"
     (bearing)="onBearingChange($event)"
   ></uwmh-map-bearing>
-  <uwmh-integer-input
-    [text]="'Zoom'"
-    [max]="22"
-    [min]="0"
-    [value]="(zoom$ | async) ?? 0"
-    (valueOut)="onZoomChange($event)"
-  ></uwmh-integer-input>
+
   <uwmh-time-slider (newTime)="onDateTimeChange($event)"></uwmh-time-slider>
 </div>

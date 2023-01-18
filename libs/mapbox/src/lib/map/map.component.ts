@@ -21,9 +21,13 @@ export class MapComponent implements AfterViewInit {
     const { map, tb } = this.service.newMap(this.mapDiv);
     map.on('style.load', () => this.service.onStyleLoad(map, tb));
     map.on('load', () => this.service.onLoad(map));
-    map.on('zoomend', () => this.service.onZoomEnd(map));
-    map.on('rotateend', () => this.service.onRotateEnd(map));
-    map.on('pitchend', () => this.service.onPitchEnd(map));
-    map.on('dragend', () => this.service.onDragEnd(map));
+    map.on('wheel', () => this.service.onWheel());
+    map.on('boxzoomend', () => this.service.onBoxZoomEnd());
+    // map.on('boxzoomstart', () => this.service.onBoxZoomEnd());
+    // map.on('zoomend', () => this.service.onWheel(map));
+    map.on('rotateend', () => this.service.onRotateEnd());
+    map.on('pitchend', () => this.service.onPitchEnd());
+    map.on('dragend', () => this.service.onDragEnd());
+    // map.on('idle', () => this.service.onWheel(map));
   }
 }
