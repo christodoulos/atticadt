@@ -16,6 +16,7 @@ import {
 export class SimpleSelectComponent implements OnChanges {
   @Input() options: string[] = [];
   @Input() label = 'Selections';
+  @Input() prompt = 'Select';
   @Input() preSelectedOption: string | undefined;
   @Output() selection = new EventEmitter<string>();
   selectedOption = '';

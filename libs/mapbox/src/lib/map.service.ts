@@ -59,13 +59,18 @@ export class MapService {
   newMap(container: ElementRef): { map: Map; tb: any } {
     console.log('newMap');
     this.map = new Map({
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/mapbox/streets-v12',
+      // style: 'mapbox://styles/mapbox/satellite-streets-v9',
+      // style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
       container: container.nativeElement,
       antialias: true,
+      hash: true,
       attributionControl: false,
       bearingSnap: 0,
       accessToken:
-        'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
+        'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3luYTd3eW0ydGFiMm9xcHRmMGJyOHVrIn0.c1mSurunkjU4Wyf2hxcy0g',
+      // 'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
+      // 'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3luYTd3eW0ydGFiMm9xcHRmMGJyOHVrIn0.c1mSurunkjU4Wyf2hxcy0g',
     });
 
     window.tb = this.newThreeBox(this.map);
@@ -80,7 +85,7 @@ export class MapService {
       willReadFrequently: true,
       realSunlight: true,
       sky: true,
-      // terrain: true,
+      terrain: true,
       enableSelectingObjects: true,
       enableSelectingFeatures: true,
     });
@@ -109,12 +114,12 @@ export class MapService {
         'waterway-label'
       );
     }
-    tb.setBuildingShadows({
-      map: this.map,
-      layerId: 'building-shadows',
-      buildingsLayerId: '3d-buildings',
-      minAltitude: 0.1,
-    });
+    // window.tb.setBuildingShadows({
+    //   map: this.map,
+    //   layerId: 'building-shadows',
+    //   buildingsLayerId: '3d-buildings',
+    //   minAltitude: 0.1,
+    // });
   }
 
   addSkyLayer() {
@@ -148,12 +153,16 @@ export class MapService {
     this.map?.removeLayer('sky-layer');
   }
 
-  addGLBLayer(map: Map, tb: any) {
+  // addGLBLayer(map: Map, tb: any) {
+  addGLBLayer() {
     console.log('addGLBLayer');
     // 23.781372557061157, 37.988260208268386
-    const te = map.queryTerrainElevation([23.73664159, 37.87891007]);
+
+    const te = this.map.queryTerrainElevation([23.73664159, 37.87891007], {
+      exaggerated: false,
+    });
     console.log('TERRAIN ELEVATION ', te);
-    map.addLayer({
+    this.map.addLayer({
       id: 'custom_layer',
       type: 'custom',
       renderingMode: '3d',
@@ -163,19 +172,22 @@ export class MapService {
           type: 'gltf',
           scale: 1,
           units: 'meters',
-          rotation: { x: 90.0, y: 180.0, z: 0.0 },
-          anchor: 'center',
+          rotation: { x: 90.0, y: 180.0, z: 0 },
+          anchor: 'auto',
         };
-        tb.loadObj(options, (model: any) => {
+        window.tb.loadObj(options, (model: any) => {
+          // model.setCoords([23.73664159, 37.87891007, te]);
+          // model.setCoords([23.73664159, 37.87891007]);
           model.setCoords([23.73664159, 37.87891007, te]);
-          tb.add(model);
+          model.color = 0xffffff;
+          window.tb.add(model);
           // model.castShadow = true;
-          tb.lights.dirLight.target = model;
+          window.tb.lights.dirLight.target = model;
         });
       },
 
       render: function (gl, matrix) {
-        tb.update();
+        window.tb.update();
       },
     });
   }
@@ -187,12 +199,23 @@ export class MapService {
       [24.116494, 38.340999],
       [22.890434, 35.823757],
     ]);
+    this.addGLBLayer();
   }
 
   onStyleLoad(map: Map, tb: any) {
     console.log('MAP STYLE LOAD');
+
     this.add3DBuildingsLayer(map, tb);
-    this.addGLBLayer(map, tb);
+    // this.addGLBLayer(map, tb);
+    // map.addSource('mapbox-dem-0', {
+    //   type: 'raster-dem',
+    //   url: 'mapbox://christodoulos.7be11huz',
+    //   tileSize: 512,
+    //   maxzoom: 17,
+    //   minzoom: 1,
+    // });
+    // this.map.setTerrain({ source: 'mapbox-dem-0', exaggeration: 1.5 });
+    // this.addGLBLayer();
   }
 
   getMapBounds(): number[][] {
@@ -225,6 +248,10 @@ export class MapService {
   getMapPitch(): number {
     const pitch = this.map.getPitch();
     return Math.round((pitch + Number.EPSILON) * 100) / 100;
+  }
+
+  setMapCursor(cursor: string) {
+    this.map.getCanvas().style.cursor = cursor;
   }
 
   onZoomEnd(map: Map) {
@@ -266,7 +293,7 @@ export class MapService {
 
   mapStyles(): string[] {
     return [
-      'mapbox://styles/mapbox/streets-v11',
+      'mapbox://styles/mapbox/streets-v12',
       'mapbox://styles/mapbox/streets-v9',
       'mapbox://styles/mapbox/satellite-streets-v9',
       'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',

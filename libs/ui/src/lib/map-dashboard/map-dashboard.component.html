@@ -12,6 +12,7 @@
   <uwmh-simple-select
     [label]="'Attica Landmarks'"
     [options]="landmarks"
+    [prompt]="'Select a Landmark'"
     (selection)="onLandmarkChange($event)"
   ></uwmh-simple-select>
   <uwmh-map-center

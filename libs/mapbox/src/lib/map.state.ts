@@ -20,7 +20,7 @@ export interface DTMap {
 }
 
 const DTMapInit: DTMap = {
-  style: 'mapbox://styles/mapbox/satellite-streets-v9',
+  style: 'mapbox://styles/mapbox/streets-v12',
   bounds: [
     [24.116494, 38.340999],
     [22.890434, 35.823757],
