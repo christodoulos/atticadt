@@ -1,8 +1,18 @@
 <div class="flex space-x-2 text-slate-500">
   <uwmh-svg-icon
     class="cursor-pointer hover:text-slate-600"
-    [icon]="'home'"
+    [icon]="'info'"
     routerLink="/welcome"
+  ></uwmh-svg-icon>
+  <uwmh-svg-icon
+    class="cursor-pointer hover:text-slate-600"
+    [icon]="'map-pin'"
+    routerLink="/welcome"
+  ></uwmh-svg-icon>
+  <uwmh-svg-icon
+    class="cursor-pointer hover:text-slate-600"
+    [icon]="'photo'"
+    (click)="onClick('download')"
   ></uwmh-svg-icon>
   <uwmh-svg-icon
     class="cursor-pointer hover:text-slate-600"
@@ -12,6 +22,5 @@
   <uwmh-svg-icon
     class="cursor-pointer hover:text-slate-600"
     [icon]="'map'"
-    (click)="toggleOverLayVisible()"
   ></uwmh-svg-icon>
 </div>

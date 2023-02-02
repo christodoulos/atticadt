@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UIState } from '../ui.state';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'uwmh-icon-bar',
@@ -7,8 +11,9 @@ import { UIState } from '../ui.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconBarComponent {
-  toggleOverLayVisible() {
-    this.uiState.toggleOverlayVisible();
+  @Output() command = new EventEmitter<string>();
+
+  onClick(command: string) {
+    this.command.emit(command);
   }
-  constructor(private uiState: UIState) {}
 }

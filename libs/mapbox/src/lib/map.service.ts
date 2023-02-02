@@ -66,6 +66,7 @@ export class MapService {
       antialias: true,
       // hash: true,
       attributionControl: false,
+      preserveDrawingBuffer: true,
       bearingSnap: 0,
       accessToken:
         'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3luYTd3eW0ydGFiMm9xcHRmMGJyOHVrIn0.c1mSurunkjU4Wyf2hxcy0g',

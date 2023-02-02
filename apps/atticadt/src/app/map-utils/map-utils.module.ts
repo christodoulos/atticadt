@@ -6,9 +6,10 @@ import { UiwidgetsModule } from '@uwmh/uiwidgets';
 
 import { MapUtilsRoutingModule } from './map-utils.routing';
 import { MapDashboardComponent } from './map-dashboard/map-dashboard.component';
+import { MapDownloadComponent } from './map-download/map-download.component';
 
 @NgModule({
-  declarations: [MapDashboardComponent],
+  declarations: [MapDashboardComponent, MapDownloadComponent],
   imports: [
     CommonModule,
     MapUtilsRoutingModule,
