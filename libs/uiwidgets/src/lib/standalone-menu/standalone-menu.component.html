@@ -1,0 +1,28 @@
+<uwmh-svg-icon
+  [icon]="icon"
+  (click)="isOpen = !isOpen"
+  cdkOverlayOrigin
+  #trigger="cdkOverlayOrigin"
+  class="cursor-pointer"
+></uwmh-svg-icon>
+<!-- thanks to https://tinyurl.com/2yl858hq -->
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  (backdropClick)="isOpen = false"
+  cdkConnectedOverlayBackdropClass="no-style-class-to-hide-backdrop"
+>
+  <div class="bg-white mt-2 text-sm">
+    <ul class="space-y-1">
+      <li
+        (click)="onClick(item)"
+        class="cursor-pointer hover:bg-slate-300 font-medium"
+        *ngFor="let item of items"
+      >
+        {{ item }}
+      </li>
+    </ul>
+  </div>
+</ng-template>

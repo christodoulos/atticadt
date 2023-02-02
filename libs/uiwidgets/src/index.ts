@@ -11,3 +11,5 @@ export * from './lib/time-slider/time-slider.component';
 export * from './lib/map-bearing/map-bearing.component';
 
 export * from './lib/map-center/map-center.component';
+
+export * from './lib/standalone-menu/standalone-menu.component';
