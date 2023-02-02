@@ -1,0 +1,43 @@
+<div class="flex flex-col space-y-4">
+  <!-- <uwmh-simple-select
+    [label]="'Map Style'"
+    [options]="mapStyles"
+    [preSelectedOption]="(style$ | async) ?? ''"
+    (selection)="onStyleChange($event)"
+  ></uwmh-simple-select>
+  <uwmh-simple-select
+    [label]="'Attica Landmarks'"
+    [options]="landmarks"
+    [prompt]="'Select a Landmark'"
+    (selection)="onLandmarkChange($event)"
+  ></uwmh-simple-select> -->
+
+  <div class="flex flex-row items-center space-x-4">
+    <uwmh-map-center
+      [lng]="(lng$ | async) ?? 0"
+      [lat]="(lat$ | async) ?? 0"
+      (center)="onMapCenterChange($event)"
+    ></uwmh-map-center>
+    <uwmh-integer-input
+      [text]="'Pitch'"
+      [max]="85"
+      [min]="0"
+      [value]="(pitch$ | async) ?? 0"
+      (valueOut)="onPitchChange($event)"
+    ></uwmh-integer-input>
+    <!-- bearing widget -->
+    <uwmh-map-bearing
+      [value]="(bearing$ | async) ?? 0"
+      (bearing)="onBearingChange($event)"
+    ></uwmh-map-bearing>
+    <uwmh-integer-input
+      [text]="'Zoom'"
+      [max]="22"
+      [min]="0"
+      [value]="(zoom$ | async) ?? 0"
+      (valueOut)="onZoomChange($event)"
+    ></uwmh-integer-input>
+  </div>
+
+  <uwmh-time-slider (newTime)="onDateTimeChange($event)"></uwmh-time-slider>
+</div>

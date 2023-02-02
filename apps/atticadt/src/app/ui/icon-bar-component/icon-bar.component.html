@@ -1,0 +1,17 @@
+<div class="flex space-x-2 text-slate-500">
+  <uwmh-svg-icon
+    class="cursor-pointer hover:text-slate-600"
+    [icon]="'home'"
+    routerLink="/welcome"
+  ></uwmh-svg-icon>
+  <uwmh-svg-icon
+    class="cursor-pointer hover:text-slate-600"
+    [icon]="'cog'"
+    routerLink="/map/dashboard"
+  ></uwmh-svg-icon>
+  <uwmh-svg-icon
+    class="cursor-pointer hover:text-slate-600"
+    [icon]="'map'"
+    (click)="toggleOverLayVisible()"
+  ></uwmh-svg-icon>
+</div>

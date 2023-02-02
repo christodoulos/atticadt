@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'uwmh-range-input',
   templateUrl: './range-input.component.html',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RangeInputComponent {
   @Input() inValue = 0;

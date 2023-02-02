@@ -1,14 +1,11 @@
-<div>
-  <label class="block text-sm font-medium text-gray-700">
-    <span>{{ text }}</span>
-    <span class="ml-1 text-gray-500">({{ min }} - {{ max }})</span>
-  </label>
+<div class="flex items-center space-x-2">
+  <span class="text-xs font-medium">{{ text }}</span>
   <input
     type="number"
     [(ngModel)]="value"
     (ngModelChange)="onChange($event)"
     min="{{ min }}"
     max="{{ max }}"
-    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base sm:text-sm"
+    class="text-xs w-20 rounded-md border-slate-300"
   />
 </div>

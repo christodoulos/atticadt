@@ -7,6 +7,7 @@ import { MapState } from '@uwmh/mapbox';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AtticadtComponent {
+  overlayVisible = true;
   constructor(private mapState: MapState) {}
 
   bounds() {
@@ -14,5 +15,9 @@ export class AtticadtComponent {
       [24.116494, 38.340999],
       [22.890434, 35.823757],
     ]);
+  }
+
+  toggleOverLay() {
+    this.overlayVisible = !this.overlayVisible;
   }
 }

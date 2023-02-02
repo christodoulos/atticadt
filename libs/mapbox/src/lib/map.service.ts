@@ -64,7 +64,7 @@ export class MapService {
       // style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
       container: container.nativeElement,
       antialias: true,
-      hash: true,
+      // hash: true,
       attributionControl: false,
       bearingSnap: 0,
       accessToken:

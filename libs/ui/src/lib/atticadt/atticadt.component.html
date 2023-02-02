@@ -9,17 +9,39 @@
   <uwmh-footer></uwmh-footer>
 </div> -->
 
-<div class="flex flex-col p-2">
-  <div class="flex p-2 items-center space-x-2">
-    <div class="flex flex-col">
-      <img class="w-36" src="/assets/logo.png" />
+<div class="flex flex-col m-2 p-2 w-201 border rounded-md bg-slate-100">
+  <div class="flex pb-2 items-end justify-between">
+    <img class="w-36" src="/assets/logo.png" />
+    <div class="flex space-x-2">
+      <uwmh-svg-icon class="cursor-pointer" [icon]="'cog'"></uwmh-svg-icon>
+      <uwmh-svg-icon class="cursor-pointer" [icon]="'map'"></uwmh-svg-icon>
     </div>
   </div>
-  <div class="flex flex-row space-x-2 max-w-xl">
+
+  <div class="flex flex-col relative">
     <uwmh-map></uwmh-map>
-    <div><uwmh-map-dashboard></uwmh-map-dashboard></div>
+    <div
+      *ngIf="overlayVisible"
+      class="flex flex-col absolute inset-y-80 bg-slate-200 w-200 h-80 z-50"
+    >
+      <div class="flex w-full justify-end">
+        <uwmh-svg-icon
+          class="cursor-pointer p-1"
+          [icon]="'x-mark'"
+          (click)="toggleOverLay()"
+        ></uwmh-svg-icon>
+      </div>
+      <div>Content</div>
+    </div>
   </div>
-  <div class="flex p-2 items-center space-x-2">
-    <span class="text-sm font-medium text-gray-600">Attica Digital Twin</span>
+  <!-- <div><uwmh-map-dashboard></uwmh-map-dashboard></div> -->
+
+  <div
+    class="w-full flex pt-2 items-center justify-between text-xs font-medium text-slate-600"
+  >
+    <span class="font-semibold">Attica Digital Twin</span>
+    <span class="text-right"
+      >&copy; 2023 Urban Water Management and Hydroinformatics Group</span
+    >
   </div>
 </div>

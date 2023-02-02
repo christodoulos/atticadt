@@ -1,1 +1,1 @@
-declare module '@uwmh/threebox';
+// declare module '@uwmh/threebox';
