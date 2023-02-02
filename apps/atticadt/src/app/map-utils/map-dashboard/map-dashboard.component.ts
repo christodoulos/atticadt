@@ -7,6 +7,7 @@ import { MapState, MapService } from '@uwmh/mapbox';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapDashboardComponent {
+  map$ = this.state.map$;
   style$ = this.state.style$;
   pitch$ = this.state.pitch$;
   bearing$ = this.state.bearing$;

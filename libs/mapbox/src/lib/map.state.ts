@@ -42,6 +42,7 @@ const mapState = createStore({ name: 'map' }, withProps<DTMap>(DTMapInit));
 
 @Injectable()
 export class MapState {
+  map$ = mapState.pipe(select((state) => JSON.stringify(state)));
   style$ = mapState.pipe(select((state) => state.style));
   bounds$ = mapState.pipe(select((state) => state.bounds));
   bearing$ = mapState.pipe(select((state) => state.bearing));

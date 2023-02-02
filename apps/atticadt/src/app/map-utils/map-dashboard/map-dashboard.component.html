@@ -37,6 +37,11 @@
       [value]="(zoom$ | async) ?? 0"
       (valueOut)="onZoomChange($event)"
     ></uwmh-integer-input>
+    <uwmh-svg-icon
+      [icon]="'clipboard'"
+      [cdkCopyToClipboard]="(map$ | async) ?? ''"
+      class="text-slate-500 hover:text-slate-600 cursor-pointer"
+    ></uwmh-svg-icon>
   </div>
 
   <uwmh-time-slider (newTime)="onDateTimeChange($event)"></uwmh-time-slider>

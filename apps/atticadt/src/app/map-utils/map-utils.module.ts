@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { ClipboardModule } from '@angular/cdk/clipboard';
+
 import { UiprimitivesModule } from '@uwmh/uiprimitives';
 import { UiwidgetsModule } from '@uwmh/uiwidgets';
 
@@ -12,6 +14,7 @@ import { MapDownloadComponent } from './map-download/map-download.component';
   declarations: [MapDashboardComponent, MapDownloadComponent],
   imports: [
     CommonModule,
+    ClipboardModule,
     MapUtilsRoutingModule,
     UiprimitivesModule,
     UiwidgetsModule,
