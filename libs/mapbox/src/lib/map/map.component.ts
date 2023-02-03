@@ -5,7 +5,6 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
-import { debounce } from 'lodash-es';
 import { MapService } from '../map.service';
 
 @Component({
@@ -17,18 +16,14 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('map') mapDiv!: ElementRef;
 
   ngAfterViewInit(): void {
-    const { map, tb } = this.service.newMap(this.mapDiv);
-    map.on('style.load', () => this.service.onStyleLoad(map, tb));
+    const { map } = this.service.newMap(this.mapDiv);
+    map.on('style.load', () => this.service.onStyleLoad(map));
     map.on('load', () => this.service.onLoad(map));
     map.on('wheel', () => this.service.onWheel());
     map.on('boxzoomend', () => this.service.onBoxZoomEnd());
     map.on('rotateend', () => this.service.onRotateEnd());
     map.on('pitchend', () => this.service.onPitchEnd());
     map.on('dragend', () => this.service.onDragEnd());
-    // map.on(
-    //   'mousemove',
-    //   debounce((e) => this.service.onMouseMove(e, map), 100)
-    // );
   }
 
   constructor(private service: MapService) {}

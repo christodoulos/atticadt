@@ -29,6 +29,8 @@ export class MapService {
   center$ = this.state.center$;
   dateTime$ = this.state.dateTime$;
   follow$ = this.state.follow$;
+  terrain$ = this.state.terrain$;
+  shadows$ = this.state.shadows$;
 
   followMouse = debounce((e) => this.onMouseMove(e, this.map), 100);
 
@@ -64,7 +66,7 @@ export class MapService {
     });
   }
 
-  add3DBuildingsLayer(map: Map, tb: any) {
+  add3DBuildingsLayer(map: Map) {
     console.log('add3DBuildingsLayer');
     if (map.getLayer('building')) {
       map.removeLayer('building');
@@ -87,12 +89,6 @@ export class MapService {
         'waterway-label'
       );
     }
-    // window.tb.setBuildingShadows({
-    //   map: this.map,
-    //   layerId: 'building-shadows',
-    //   buildingsLayerId: '3d-buildings',
-    //   minAltitude: 0.1,
-    // });
   }
 
   addSkyLayer() {
@@ -175,20 +171,10 @@ export class MapService {
     this.addGLBLayer();
   }
 
-  onStyleLoad(map: Map, tb: any) {
+  onStyleLoad(map: Map) {
     console.log('MAP STYLE LOAD');
 
-    this.add3DBuildingsLayer(map, tb);
-    // this.addGLBLayer(map, tb);
-    // map.addSource('mapbox-dem-0', {
-    //   type: 'raster-dem',
-    //   url: 'mapbox://christodoulos.7be11huz',
-    //   tileSize: 512,
-    //   maxzoom: 17,
-    //   minzoom: 1,
-    // });
-    // this.map.setTerrain({ source: 'mapbox-dem-0', exaggeration: 1.5 });
-    // this.addGLBLayer();
+    this.add3DBuildingsLayer(map);
   }
 
   getMapBounds(): number[][] {
@@ -332,6 +318,21 @@ export class MapService {
         this.map && this.map.on('mousemove', this.followMouse);
       } else {
         this.map && this.map.off('mousemove', this.followMouse);
+      }
+    });
+    this.terrain$.subscribe((visible) => {
+      this.tb.terrain = visible;
+    });
+    this.shadows$.subscribe((visible) => {
+      if (visible) {
+        this.tb.setBuildingShadows({
+          map: this.map,
+          layerId: 'building-shadows',
+          buildingsLayerId: '3d-buildings',
+          minAltitude: 0.1,
+        });
+      } else {
+        this.tb.removeLayer('building-shadows');
       }
     });
   }

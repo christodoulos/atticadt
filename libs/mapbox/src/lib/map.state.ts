@@ -57,7 +57,7 @@ const DTMapInit: DTMap = {
   },
   antialias: true,
   skyLayer: true,
-  terrain: false,
+  terrain: true,
   shadows: false,
   dateTime: new Date(),
 };
