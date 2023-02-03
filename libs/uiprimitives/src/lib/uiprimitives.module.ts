@@ -10,6 +10,7 @@ import { RangeInputComponent } from './range-input/range-input.component';
 import { FloatInputComponent } from './float-input/float-input.component';
 import { SimpleSelectComponent } from './simple-select/simple-select.component';
 import { IconToggleComponent } from './icon-toggle/icon-toggle.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
@@ -23,6 +24,7 @@ import { IconToggleComponent } from './icon-toggle/icon-toggle.component';
     FloatInputComponent,
     SimpleSelectComponent,
     IconToggleComponent,
+    CheckboxComponent,
   ],
   exports: [
     ButtonPrimaryComponent,
@@ -34,6 +36,7 @@ import { IconToggleComponent } from './icon-toggle/icon-toggle.component';
     FloatInputComponent,
     SimpleSelectComponent,
     IconToggleComponent,
+    CheckboxComponent,
   ],
 })
 export class UiprimitivesModule {}

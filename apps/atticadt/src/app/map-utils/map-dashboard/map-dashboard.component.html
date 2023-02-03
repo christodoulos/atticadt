@@ -12,6 +12,24 @@
     (selection)="onLandmarkChange($event)"
   ></uwmh-simple-select> -->
 
+  <div class="flex items-center space-x-4">
+    <uwmh-checkbox
+      [text]="'3D terrain'"
+      [checked]="(terrain$ | async) ?? false"
+      (status)="on3DTerrainStatusChange($event)"
+    ></uwmh-checkbox>
+    <uwmh-checkbox
+      [text]="'Shadows'"
+      [checked]="(shadows$ | async) ?? false"
+      (status)="onShadowsChange($event)"
+    ></uwmh-checkbox>
+    <uwmh-checkbox
+      [text]="'Follow'"
+      [checked]="(follow$ | async) ?? false"
+      (status)="onFollowChange($event)"
+    ></uwmh-checkbox>
+  </div>
+
   <div class="flex flex-row items-center space-x-4">
     <uwmh-map-center
       [lng]="(lng$ | async) ?? 0"

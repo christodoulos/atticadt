@@ -1,0 +1,9 @@
+<div class="flex items-center space-x-2">
+  <input
+    type="checkbox"
+    class="rounded outline-none focus:ring-0 focus:ring-offset-0"
+    [(ngModel)]="checked"
+    (ngModelChange)="onChange($event)"
+  />
+  <span class="text-xs font-medium">{{ text }}</span>
+</div>

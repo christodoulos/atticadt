@@ -12,6 +12,7 @@ import { Map, LngLatBoundsLike, LngLatLike, MapMouseEvent } from 'mapbox-gl';
 import { MapState } from './map.state';
 
 import { centroid } from '@turf/turf';
+import { debounce } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,9 @@ export class MapService {
   skyLayer$ = this.state.skyLayer$;
   center$ = this.state.center$;
   dateTime$ = this.state.dateTime$;
+  follow$ = this.state.follow$;
+
+  followMouse = debounce((e) => this.onMouseMove(e, this.map), 100);
 
   newMap(container: ElementRef): { map: Map; tb: any } {
     console.log('newMap');
@@ -322,6 +326,13 @@ export class MapService {
     });
     this.dateTime$.subscribe((dateTime) => {
       this.tb ? this.tb.setSunlight(dateTime) : {};
+    });
+    this.follow$.subscribe((follow) => {
+      if (follow) {
+        this.map && this.map.on('mousemove', this.followMouse);
+      } else {
+        this.map && this.map.off('mousemove', this.followMouse);
+      }
     });
   }
 }

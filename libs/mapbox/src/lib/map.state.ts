@@ -29,6 +29,7 @@ export interface DTMap {
   center: number[];
   lat: number;
   lng: number;
+  follow: boolean;
   where: MapWhere;
   antialias: boolean;
   skyLayer: boolean;
@@ -49,6 +50,7 @@ const DTMapInit: DTMap = {
   center: [23.503464000000008, 37.092829235162526],
   lat: 37.092829235162526,
   lng: 23.503464000000008,
+  follow: false,
   where: {
     point: { x: 23.503464000000008, y: 37.092829235162526 },
     lngLat: { lng: 23.503464000000008, lat: 37.092829235162526 },
@@ -76,6 +78,8 @@ export class MapState {
   center$ = mapState.pipe(select((state) => state.center));
   lat$ = mapState.pipe(select((state) => state.lat));
   lng$ = mapState.pipe(select((state) => state.lng));
+  where$ = mapState.pipe(select((state) => state.where));
+  follow$ = mapState.pipe(select((state) => state.follow));
   dateTime$ = mapState.pipe(select((state) => state.dateTime));
 
   update(attrs: Partial<DTMap>) {
@@ -122,12 +126,18 @@ export class MapState {
 
   setTerrain(visible: boolean) {
     console.log('setTerrain');
-    mapState.update((state) => ({ ...state, terrain: visible }));
+    const change = visible
+      ? { terrain: true, shadows: false }
+      : { terrain: false };
+    mapState.update((state) => ({ ...state, ...change }));
   }
 
   setShadows(visible: boolean) {
     console.log('setShadows');
-    mapState.update((state) => ({ ...state, shadows: visible }));
+    const change = visible
+      ? { terrain: false, shadows: true }
+      : { shadows: false };
+    mapState.update((state) => ({ ...state, ...change }));
   }
 
   toggleSkyLayer() {
@@ -156,6 +166,10 @@ export class MapState {
     const center = mapState.state.center;
     console.log(center);
     mapState.update((state) => ({ ...state, lng, center: [lng, center[1]] }));
+  }
+
+  setFollow(status: boolean) {
+    mapState.update((state) => ({ ...state, follow: status }));
   }
 
   setWhere(where: MapWhere) {

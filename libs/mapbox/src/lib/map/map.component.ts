@@ -25,10 +25,10 @@ export class MapComponent implements AfterViewInit {
     map.on('rotateend', () => this.service.onRotateEnd());
     map.on('pitchend', () => this.service.onPitchEnd());
     map.on('dragend', () => this.service.onDragEnd());
-    map.on(
-      'mousemove',
-      debounce((e) => this.service.onMouseMove(e, map), 100)
-    );
+    // map.on(
+    //   'mousemove',
+    //   debounce((e) => this.service.onMouseMove(e, map), 100)
+    // );
   }
 
   constructor(private service: MapService) {}
