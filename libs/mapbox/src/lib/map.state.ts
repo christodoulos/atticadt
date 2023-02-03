@@ -3,6 +3,23 @@ import { createStore, withProps, select } from '@ngneat/elf';
 import { map } from 'rxjs';
 import * as _ from 'lodash-es';
 
+export interface MapWhere {
+  point: { x: number; y: number };
+  lngLat: { lng: number; lat: number };
+  properties?: {
+    category_en?: string;
+    class?: string;
+    maki?: string;
+    name?: string;
+    name_local?: string;
+    name_script?: string;
+    type?: string;
+    iso_3166_1?: string;
+    filterrank?: number;
+    sizerank?: number;
+  };
+}
+
 export interface DTMap {
   style: string;
   bounds: number[][];
@@ -12,6 +29,7 @@ export interface DTMap {
   center: number[];
   lat: number;
   lng: number;
+  where: MapWhere;
   antialias: boolean;
   skyLayer: boolean;
   terrain: boolean;
@@ -31,6 +49,10 @@ const DTMapInit: DTMap = {
   center: [23.503464000000008, 37.092829235162526],
   lat: 37.092829235162526,
   lng: 23.503464000000008,
+  where: {
+    point: { x: 23.503464000000008, y: 37.092829235162526 },
+    lngLat: { lng: 23.503464000000008, lat: 37.092829235162526 },
+  },
   antialias: true,
   skyLayer: true,
   terrain: false,
@@ -134,6 +156,10 @@ export class MapState {
     const center = mapState.state.center;
     console.log(center);
     mapState.update((state) => ({ ...state, lng, center: [lng, center[1]] }));
+  }
+
+  setWhere(where: MapWhere) {
+    mapState.update((state) => ({ ...state, where }));
   }
 
   setDateTime(dateTime: Date) {

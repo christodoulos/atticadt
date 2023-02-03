@@ -8,7 +8,7 @@ window.tb = window.tb || {};
 declare let Threebox: any;
 
 import { ElementRef, Injectable } from '@angular/core';
-import { Map, LngLatBoundsLike, LngLatLike } from 'mapbox-gl';
+import { Map, LngLatBoundsLike, LngLatLike, MapMouseEvent } from 'mapbox-gl';
 import { MapState } from './map.state';
 
 import { centroid } from '@turf/turf';
@@ -28,40 +28,10 @@ export class MapService {
   center$ = this.state.center$;
   dateTime$ = this.state.dateTime$;
 
-  constructor(private state: MapState) {
-    // subscribe to map selectors and update map
-    this.style$.subscribe((style) => {
-      this.map && style ? this.map.setStyle(style) : {};
-    });
-    this.bounds$.subscribe((bounds) => {
-      this.map && bounds ? this.map.fitBounds(bounds as LngLatBoundsLike) : {};
-    });
-    this.bearing$.subscribe((bearing) => {
-      this.map && bearing ? this.map.setBearing(bearing) : {};
-    });
-    this.pitch$.subscribe((pitch) => {
-      this.map && pitch ? this.map.setPitch(pitch) : {};
-    });
-    this.zoom$.subscribe((zoom) => {
-      this.map && zoom ? this.map.setZoom(zoom) : {};
-    });
-    this.skyLayer$.subscribe((visible) => {
-      visible ? this.addSkyLayer() : this.removeSkyLayer();
-    });
-    this.center$.subscribe((center) => {
-      this.map && center ? this.map.setCenter(center as LngLatLike) : {};
-    });
-    this.dateTime$.subscribe((dateTime) => {
-      this.tb ? this.tb.setSunlight(dateTime) : {};
-    });
-  }
-
   newMap(container: ElementRef): { map: Map; tb: any } {
     console.log('newMap');
     this.map = new Map({
       style: 'mapbox://styles/mapbox/streets-v12',
-      // style: 'mapbox://styles/mapbox/satellite-streets-v9',
-      // style: 'mapbox://styles/christodoulos/ckzichi5q001l15p1wpq6sbvs',
       container: container.nativeElement,
       antialias: true,
       // hash: true,
@@ -70,8 +40,6 @@ export class MapService {
       bearingSnap: 0,
       accessToken:
         'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3luYTd3eW0ydGFiMm9xcHRmMGJyOHVrIn0.c1mSurunkjU4Wyf2hxcy0g',
-      // 'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3lvdzVhb2MwNGJoMnVwN2ptd2tna2Y1In0.jiaYFXf01T5_R73Tf6T4jA',
-      // 'pk.eyJ1IjoiY2hyaXN0b2RvdWxvcyIsImEiOiJja3luYTd3eW0ydGFiMm9xcHRmMGJyOHVrIn0.c1mSurunkjU4Wyf2hxcy0g',
     });
 
     window.tb = this.newThreeBox(this.map);
@@ -255,6 +223,19 @@ export class MapService {
     this.map.getCanvas().style.cursor = cursor;
   }
 
+  onMouseMove(e: MapMouseEvent, map: Map) {
+    const point = { x: e.point.x, y: e.point.y };
+    const lngLat = { lng: e.lngLat.lng, lat: e.lngLat.lat };
+    const features = map.queryRenderedFeatures(e.point);
+    const properties = features.length ? features[0]['properties'] : {};
+    const where = {
+      point,
+      lngLat,
+      properties: properties as { [key: string]: any },
+    };
+    this.state.setWhere(where);
+  }
+
   onZoomEnd(map: Map) {
     let zoom = map.getZoom();
     zoom = Math.round((zoom + Number.EPSILON) * 100) / 100;
@@ -314,5 +295,33 @@ export class MapService {
       default:
         return [0, 0];
     }
+  }
+
+  constructor(private state: MapState) {
+    // subscribe to map selectors and update map
+    this.style$.subscribe((style) => {
+      this.map && style ? this.map.setStyle(style) : {};
+    });
+    this.bounds$.subscribe((bounds) => {
+      this.map && bounds ? this.map.fitBounds(bounds as LngLatBoundsLike) : {};
+    });
+    this.bearing$.subscribe((bearing) => {
+      this.map && bearing ? this.map.setBearing(bearing) : {};
+    });
+    this.pitch$.subscribe((pitch) => {
+      this.map && pitch ? this.map.setPitch(pitch) : {};
+    });
+    this.zoom$.subscribe((zoom) => {
+      this.map && zoom ? this.map.setZoom(zoom) : {};
+    });
+    this.skyLayer$.subscribe((visible) => {
+      visible ? this.addSkyLayer() : this.removeSkyLayer();
+    });
+    this.center$.subscribe((center) => {
+      this.map && center ? this.map.setCenter(center as LngLatLike) : {};
+    });
+    this.dateTime$.subscribe((dateTime) => {
+      this.tb ? this.tb.setSunlight(dateTime) : {};
+    });
   }
 }
