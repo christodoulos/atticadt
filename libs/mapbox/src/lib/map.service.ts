@@ -138,7 +138,7 @@ export class MapService {
       // onAdd: function (map, mbxContext) {
       onAdd: (map, mbxContext) => {
         const options = {
-          obj: '/assets/tin.glb',
+          obj: '/assets/flood.glb',
           type: 'gltf',
           scale: 1,
           units: 'meters',
@@ -146,10 +146,9 @@ export class MapService {
           anchor: 'bottom',
         };
         window.tb.loadObj(options, (model: any) => {
-          // model.setCoords([23.73664159, 37.87891007, te]);
-          // model.setCoords([23.73664159, 37.87891007]);
-          model.setCoords([23.73664159, 37.87891007]);
+          model.setCoords([23.73664159, 37.87891007, te]);
           model.color = 0xffffff;
+
           window.tb.add(model);
           // model.castShadow = true;
           window.tb.lights.dirLight.target = model;
@@ -324,19 +323,17 @@ export class MapService {
       }
     });
     this.terrain$.subscribe((visible) => {
-      this.tb.terrain = visible;
+      if (this.map) this.tb.terrain = visible;
     });
     this.shadows$.subscribe((visible) => {
-      if (visible) {
+      if (this.map && visible) {
         this.tb.setBuildingShadows({
           map: this.map,
           layerId: 'building-shadows',
           buildingsLayerId: '3d-buildings',
           minAltitude: 0.1,
         });
-      } else {
-        this.tb.removeLayer('building-shadows');
-      }
+      } else if (this.map) this.tb.removeLayer('building-shadows');
     });
   }
 }
