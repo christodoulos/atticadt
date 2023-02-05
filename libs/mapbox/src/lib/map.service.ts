@@ -135,19 +135,20 @@ export class MapService {
       id: 'custom_layer',
       type: 'custom',
       renderingMode: '3d',
-      onAdd: function (map, mbxContext) {
+      // onAdd: function (map, mbxContext) {
+      onAdd: (map, mbxContext) => {
         const options = {
-          obj: '/assets/test0.glb',
+          obj: '/assets/tin.glb',
           type: 'gltf',
           scale: 1,
           units: 'meters',
           rotation: { x: 90.0, y: 180.0, z: 0 },
-          anchor: 'auto',
+          anchor: 'bottom',
         };
         window.tb.loadObj(options, (model: any) => {
           // model.setCoords([23.73664159, 37.87891007, te]);
           // model.setCoords([23.73664159, 37.87891007]);
-          model.setCoords([23.73664159, 37.87891007, te]);
+          model.setCoords([23.73664159, 37.87891007]);
           model.color = 0xffffff;
           window.tb.add(model);
           // model.castShadow = true;
@@ -155,8 +156,10 @@ export class MapService {
         });
       },
 
-      render: function (gl, matrix) {
-        window.tb.update();
+      // render: function (gl, matrix) {
+      render: (gl, matrix) => {
+        // window.tb.update();
+        this.tb.update();
       },
     });
   }
