@@ -143,12 +143,12 @@ export class MapService {
           scale: 1,
           units: 'meters',
           rotation: { x: 90.0, y: 180.0, z: 0 },
-          anchor: 'bottom',
+          anchor: 'center',
         };
         window.tb.loadObj(options, (model: any) => {
-          model.setCoords([23.73664159, 37.87891007, te]);
+          model.setCoords([23.73664159, 37.87891007]);
           model.color = 0xffffff;
-
+          model.addTooltip('Flood example', false);
           window.tb.add(model);
           // model.castShadow = true;
           window.tb.lights.dirLight.target = model;
