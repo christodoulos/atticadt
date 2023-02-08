@@ -4,7 +4,11 @@
     [icon]="'info'"
     routerLink="/welcome"
   ></uwmh-svg-icon>
-  <uwmh-standalone-menu [icon]="'map-pin'"></uwmh-standalone-menu>
+  <uwmh-standalone-menu
+    [icon]="'map-pin'"
+    [items]="['Attica Region', 'Athens Plant Nursery', 'Ellinikon Development']"
+    (selection)="onClick($event)"
+  ></uwmh-standalone-menu>
 
   <uwmh-svg-icon
     class="cursor-pointer hover:text-slate-600"

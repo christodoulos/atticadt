@@ -4,6 +4,7 @@ import { createStore, withProps, select } from '@ngneat/elf';
 
 export interface uiStateInterface {
   overlayVisible: boolean;
+  flyto?: string;
 }
 
 const AppStateInit: uiStateInterface = {
@@ -29,6 +30,10 @@ export class UIState {
 
   ensureOverlayVisible() {
     uiState.update((state) => ({ ...state, overlayVisible: true }));
+  }
+
+  setFlyTo(flyto: string) {
+    uiState.update((state) => ({ ...state, flyto }));
   }
 
   constructor(private router: Router) {}

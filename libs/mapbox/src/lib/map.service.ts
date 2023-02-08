@@ -78,7 +78,7 @@ export class MapService {
           source: 'composite',
           'source-layer': 'building',
           type: 'fill-extrusion',
-          minzoom: 14,
+          minzoom: 9,
           paint: {
             'fill-extrusion-color': '#ddd',
             'fill-extrusion-height': ['number', ['get', 'height'], 5],
@@ -145,13 +145,13 @@ export class MapService {
           rotation: { x: 90.0, y: 180.0, z: 0 },
           anchor: 'center',
         };
-        window.tb.loadObj(options, (model: any) => {
+        this.tb.loadObj(options, (model: any) => {
           model.setCoords([23.73664159, 37.87891007]);
-          model.color = 0xffffff;
-          model.addTooltip('Flood example', false);
-          window.tb.add(model);
+          model.color = 0x0000ff;
+          model.addTooltip('Flood example', true);
+          this.tb.add(model);
           // model.castShadow = true;
-          window.tb.lights.dirLight.target = model;
+          this.tb.lights.dirLight.target = model;
         });
       },
 
