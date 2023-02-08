@@ -122,42 +122,84 @@ export class MapService {
     this.map?.removeLayer('sky-layer');
   }
 
-  // addGLBLayer(map: Map, tb: any) {
-  addGLBLayer() {
-    console.log('addGLBLayer');
-    // 23.781372557061157, 37.988260208268386
+  // addGLBLayer() {
+  //   console.log('addGLBLayer');
+  //   // 23.781372557061157, 37.988260208268386
 
-    const te = this.map.queryTerrainElevation([23.73664159, 37.87891007], {
-      exaggerated: false,
-    });
-    console.log('TERRAIN ELEVATION ', te);
+  //   const te = this.map.queryTerrainElevation([23.73664159, 37.87891007], {
+  //     exaggerated: false,
+  //   });
+  //   console.log('TERRAIN ELEVATION ', te);
+  //   this.map.addLayer({
+  //     id: 'custom_layer',
+  //     type: 'custom',
+  //     renderingMode: '3d',
+  //     // onAdd: function (map, mbxContext) {
+  //     onAdd: (map, mbxContext) => {
+  //       const options = {
+  //         obj: '/assets/flood.glb',
+  //         type: 'gltf',
+  //         scale: 1,
+  //         units: 'meters',
+  //         rotation: { x: 90.0, y: 180.0, z: 0 },
+  //         anchor: 'center',
+  //       };
+  //       this.tb.loadObj(options, (model: any) => {
+  //         model.setCoords([23.73664159, 37.87891007]);
+  //         model.color = 0x0000ff;
+  //         model.addTooltip('Flood example', true);
+  //         this.tb.add(model);
+  //         // model.castShadow = true;
+  //         this.tb.lights.dirLight.target = model;
+  //       });
+  //     },
+
+  //     // render: function (gl, matrix) {
+  //     render: (gl, matrix) => {
+  //       // window.tb.update();
+  //       this.tb.update();
+  //     },
+  //   });
+
+  // addGLBLayer(map: Map, tb: any) {
+  addGLBLayer(
+    where: LngLatLike,
+    elevated: boolean,
+    modelFile: string,
+    modelCastShadow: boolean = true,
+    modelToolTip: string = ''
+  ) {
+    let elevation = 0;
+    if (elevated)
+      elevation =
+        this.map.queryTerrainElevation(where, { exaggerated: true }) ?? 0;
+    console.log('GLB LAYER TERRAIN ELEVATION ', elevation);
+
     this.map.addLayer({
       id: 'custom_layer',
       type: 'custom',
       renderingMode: '3d',
-      // onAdd: function (map, mbxContext) {
-      onAdd: (map, mbxContext) => {
+      onAdd: () => {
         const options = {
-          obj: '/assets/flood.glb',
+          obj: modelFile,
           type: 'gltf',
           scale: 1,
           units: 'meters',
-          rotation: { x: 90.0, y: 180.0, z: 0 },
-          anchor: 'center',
+          rotation: { x: 0.0, y: 0.0, z: 180.0 },
+          anchor: 'top-right',
         };
         this.tb.loadObj(options, (model: any) => {
-          model.setCoords([23.73664159, 37.87891007]);
+          const pos = elevated ? [...(where as number[]), elevation] : where;
+          model.setCoords(pos);
           model.color = 0x0000ff;
-          model.addTooltip('Flood example', true);
+          if (modelToolTip) model.addTooltip(modelToolTip, true);
           this.tb.add(model);
-          // model.castShadow = true;
+          model.castShadow = modelCastShadow;
           this.tb.lights.dirLight.target = model;
         });
       },
 
-      // render: function (gl, matrix) {
-      render: (gl, matrix) => {
-        // window.tb.update();
+      render: () => {
         this.tb.update();
       },
     });
@@ -170,7 +212,13 @@ export class MapService {
       [24.116494, 38.340999],
       [22.890434, 35.823757],
     ]);
-    this.addGLBLayer();
+    this.addGLBLayer([23.74510255, 37.88579824], false, '/assets/test.glb');
+    this.map.flyTo({
+      center: [23.73508263685423, 37.87729612062206],
+      zoom: 15.26,
+      bearing: 46.8,
+      pitch: 75.5,
+    });
   }
 
   onStyleLoad(map: Map) {
