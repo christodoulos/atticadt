@@ -122,7 +122,7 @@ export class MapService {
     this.map?.removeLayer('sky-layer');
   }
 
-  // addGLBLayer() {
+  //f addGLBLayer() {
   //   console.log('addGLBLayer');
   //   // 23.781372557061157, 37.988260208268386
 
